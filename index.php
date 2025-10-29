@@ -7,5 +7,6 @@
 </head>
 <body>
     <form action="patatas.php"></form>
+    <p>Patata</p>
 </body>
 </html>
