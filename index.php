@@ -1,5 +1,7 @@
 <?php
 // TODO Importar las clases
+require_once './model/Articulo.php';
+require_once './model/Bebida.php';  
 
 // Array asociativo del menú
 $menu = [
@@ -32,10 +34,13 @@ $ubicaciones = [
     ]
 ];
 
-$pedido = ["Ensalada César", "Pizza Margarita", "Café"];
+$pedido = ["Ensalada César", "Pizza Margarita", "Café", "Gambas"];
 
 // TODO Filtrar platos por disponibilidad, guardando en variable $disponibles
-$disponibles =
+$disponibles = array_filter($menu, function($articulo) {
+    // array_filter funciona con objetos y solo devuelve aquellos cuya propiedad disponibilidad sea true
+    return $articulo->disponibilidad; 
+});
 
 //////////////////////////////
 //        FUNCIONES         //
@@ -43,17 +48,70 @@ $disponibles =
 
 // TODO Función para imprimir una lista de artículos con nombre y precio
 function imprimirListaArticulos($articulos){
-
+    // Muestra la lista con el formato "• Nombre. Precio"
+    foreach($articulos as $articulo) {
+        $precio_formato = number_format($articulo->precio, 2, '.', '');
+        echo "<li>{$articulo->nombre}. {$precio_formato}</li>";
+    }
 }
 
 // TODO Función para imprimir un pedido
 function imprimirPedido($pedido, $menu) {
+    // Crear un mapa para buscar artículos rápidamente por nombre
+    $menu_map = [];
+    foreach ($menu as $articulo) {
+        $menu_map[$articulo->nombre] = $articulo;
+    }
 
+    $total = 0.0;
+
+    echo "<table border='1' cellspacing='0' cellpadding='5'>";
+    echo "<thead><tr><th>Artículo</th><th>Precio</th></tr></thead>";
+    echo "<tbody>";
+
+    foreach ($pedido as $item_name) {
+        echo "<tr>";
+        echo "<td>{$item_name}</td>";
+        
+        if (isset($menu_map[$item_name])) {
+            $articulo = $menu_map[$item_name];
+            
+            if ($articulo->disponibilidad) {
+                // Disponible: muestra precio y suma al total
+                $precio_formato = '€' . number_format($articulo->precio, 2, '.', '');
+                echo "<td>{$precio_formato}</td>";
+                $total += $articulo->precio;
+            } else {
+                // No disponible: muestra mensaje
+                echo "<td>No disponible</td>";
+            }
+        } else {
+            // No encontrado en el menú: muestra mensaje
+            echo "<td>No encontrado en el menú</td>";
+        }
+        echo "</tr>";
+    }
+    
+    // Fila final con el total, sumando solo los disponibles
+    $total_formato = '€' . number_format($total, 2, '.', '');
+    echo "<tr><td><strong>Total</strong></td><td><strong>{$total_formato}</strong></td></tr>";
+    
+    echo "</tbody>";
+    echo "</table>";
 }
 
 // TODO Función para imprimir las ubicaciones
 function imprimirUbicaciones($ubicaciones) {
-
+    echo "<ul>";
+    foreach($ubicaciones as $nombre => $datos) {
+        echo "<li><strong>Ubicación: {$nombre}</strong></li>";
+        echo "<ul>";
+        echo "<li>Dirección: {$datos['direccion']}</li>";
+        echo "<li>Teléfono: {$datos['telefono']}</li>";
+        echo "<li>Horario: {$datos['horario']}</li>";
+        echo "</ul>";
+    }
+    echo "</ul>";
 }
 
 ?>

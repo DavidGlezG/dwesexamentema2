@@ -3,16 +3,18 @@
 
 class Bebida extends Articulo
 {
-    // Atributo adicional público
+    // Atributos adicionales públicos
     public string $tamaño;
+    public string $temperatura; 
 
-    // El constructor incluye los parámetros del padre más los propios.
-    public function __constructor(string $nombre, float $precio, bool $disponibilidad, string $categoría, string $tamaño, string $tipo)
+    public function __construct(string $nombre, float $precio, bool $disponibilidad, string $categoría, string $tamaño, string $temperatura)
     {
-        // Llama al constructor de la clase padre
+        // Llama al constructor de la clase padre (Articulo)
         parent::__construct($nombre, $precio, $disponibilidad, $categoría);
-        // Asignar el atributo adicional
+        
+        // Asigna los atributos adicionales
         $this->tamaño = $tamaño;
+        $this->temperatura = $temperatura; 
     }
 }
 ?>

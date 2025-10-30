@@ -2,14 +2,14 @@
 // Clase Artículo
 class Articulo
 {
-    // Declarar atributos públicos
+    // Atributos públicos según el enunciado
     public string $nombre;
     public float $precio;
     public bool $disponibilidad;
     public string $categoría;
 
-    // Crear el constructor
-    public function __constructor(string $nombre, float $precio, bool $disponibilidad, string $categoría)
+    // Constructor
+    public function __construct(string $nombre, float $precio, bool $disponibilidad, string $categoría)
     {
         $this->nombre = $nombre;
         $this->precio = $precio;
