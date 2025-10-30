@@ -9,7 +9,7 @@ class Articulo
     public string $categoría;
 
     // Crear el constructor
-    public function __construct(string $nombre, float $precio, bool $disponibilidad, string $categoría)
+    public function __constructor(string $nombre, float $precio, bool $disponibilidad, string $categoría)
     {
         $this->nombre = $nombre;
         $this->precio = $precio;
